@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # C/C++ Algorithms & Systems
 
 This repository is a continuous compilation of academic exercises and personal learning projects. Its purpose is to document my progress and deep exploration of Computer Science fundamentals using C and C++.
@@ -17,7 +16,3 @@ All source code is written and tested under the following environment:
 * **Operating System:** Ubuntu 24.04.1 LTS
 * **C Compiler:** gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
 * **C++ Compiler:** g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
-=======
-# c-cpp-algorithms-and-systems
-A collection of academic and personal C/C++ projects exploring CS fundamentals, OOP, data structures, and algorithms.
->>>>>>> 5009deae213a8bd9b4f40586c31546ec97c08b89
