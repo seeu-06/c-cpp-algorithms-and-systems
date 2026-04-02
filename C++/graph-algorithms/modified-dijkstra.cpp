@@ -7,6 +7,25 @@
 using namespace std;
 
 /*
+    EJEMPLO DE ENTRADA Y SALIDA: --------------
+
+    1 2 
+    4 4 
+    2 10 
+    3 4 
+    1 2 3 18 
+    1 4 8 25 
+    1 3 3 10 
+    2 3 5 10 
+    2 4 4 20 
+    3 4 2 18 
+    1
+
+    1 2 4 2 3 
+    16
+*/
+
+/*
     PARES DE ENTEROS S K.
     S: santuario de entrega.
     K: peso mágico en unidades del fragmento a entregar.

@@ -1,6 +1,6 @@
 # C/C++ Algorithms & Systems
 
-This repository is a continuous compilation of academic exercises and personal learning projects. Its purpose is to document my progress and deep exploration of Computer Science fundamentals using C and C++.
+This repository is a continuous collection of academic exercises and various algorithms for my personal learning. Its purpose is to document my progress and depth exploration of Computer Science fundamentals using C and C++.
 
 ## Repository Focus
 
@@ -8,6 +8,7 @@ This repository is a continuous compilation of academic exercises and personal l
 * **Object-Oriented Programming (OOP):** Classes, inheritance, polymorphism, and encapsulation in C++.
 * **Data Structures:** Implementation of lists, stacks, queues, and their logical behavior.
 * **Trees and Graphs:** Exploration, traversals, and algorithms applied to non-linear structures.
+* **Backtracking:**
 
 ## Development and Compilation Environment
 

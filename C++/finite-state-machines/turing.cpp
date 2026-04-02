@@ -7,6 +7,21 @@
 using namespace std;
 
 /*
+    EJEMPLO DE ENTRADA Y SALIDA: --------------
+
+    3 4 
+    a b A B 
+    0 0 a A D 
+    0 0 b B D 
+    0 1 _ _ I 
+    1 2 B B S 
+    abbaa
+
+    ABBAA 
+    Rechazada
+*/
+
+/*
     N: Cantidad de estados que conforman la máquina.
     T: Cantidad de transiciones.
 
