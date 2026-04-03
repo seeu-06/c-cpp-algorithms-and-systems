@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
-const bool DEBUG = true;
 
 /*
-    N - REINAS
-    Colocar n reinas en un tablero de ajedréz de n*n, de forma que ninguna ataque a la otra en la 
-    misma fila, columna o diagonal. Se imprime la configuración del primer tablero válido resultante.
-
-    **Esta solución no busca ser la más eficiente en términos de tiempo o memoria.
+    N-QUEENS PROBLEM (PROBLEMA DE LAS N-REINAS)
+    Colocar N reinas en un tablero de ajedrez de NxN, de forma que ninguna amenace a otra en la 
+    misma fila, columna o diagonal. Se imprime la primera configuración valida.
+    
+    ** Esta implementación prioriza la claridad lógica y el aprendizaje del algoritmo de backtracking
+       sobre la optimización en términos de tiempo o memoria.
 */
 
 struct Coordinate {
@@ -17,9 +17,10 @@ struct Coordinate {
 
 class Chessboard {
     /*
+        Representación del tablero:
         'Q' -> Reina
         'X' -> Casilla amenazada
-        '_' -> Casilla vacia
+        '_' -> Casilla vacía 
     */
     int N;
     char **board;
@@ -36,12 +37,20 @@ class Chessboard {
         queenPositions = new Coordinate[N];
     }
 
+    ~Chessboard() {
+        for (int i = 0; i < N; i++) 
+            delete[] board[i];
+        
+        delete[] board;
+        delete[] queenPositions;
+    }
+
     bool isInBounds(int X, int Y) {
         // x, y pertenece [0, N)
         return (X >= 0 && X < N) && (Y >= 0 && Y < N);
     }
 
-    // establece las casillas amenazadas 'X' una vez es colocada una reina en el tablero.
+    // marca las casillas amenazadas ('X') cuando es colocada una reina en el tablero.
     void markThreats(int currentX, int currentY) {
        // cada par (deltaX[i], deltaY[i]) representa un vector de movimiento.
        // orden: horizontal(izq), horizontal(der), vertical(arr), vertical(abj)
@@ -61,7 +70,8 @@ class Chessboard {
        }
     }
 
-    // limpia todas las casillas 'X' y vuelve a calcularlas a partir de la posición de cada reina.
+    // restaura el estado de todas las casillas amenazadas en el tablero y las recalcula
+    // basándose en el historial de reinas activas.
     void removeThreats() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) 
@@ -85,49 +95,40 @@ class Chessboard {
         }
     }
 
-    void n_queens_algorithm(int X = 0, int q_placed = 0) {
-        cout << "new instance\n";
+    bool n_queens_algorithm(int X = 0, int q_placed = 0) {
         if (q_placed == N) {
-            // imprimir resultado.
-            return;
+            printBoard();
+            return true;
         } 
-
+        
         for (int currentY = 0; currentY < N; currentY++) {
-            if (DEBUG) {
-                cout << "main cycle iteration\n";
-                cout << "current: board[" << X << "][" << currentY << "] = " << board[X][currentY] << endl;
-            }
       
             if (board[X][currentY] == '_') {
                 board[X][currentY] = 'Q';
                 queenPositions[q_placed].x = X;
                 queenPositions[q_placed].y = currentY;
-                if (DEBUG) cout << "current queens: " << q_placed << endl;
 
                 markThreats(X, currentY);
+                if (n_queens_algorithm(X + 1, q_placed + 1)) return true;
 
-                if (DEBUG) printBoard();
-                n_queens_algorithm(X + 1, q_placed + 1);
-
-                // -------------------------------------
+                // backtrack --------------------------------------------
                 board[X][currentY] = '_';
                 queenPositions[q_placed].x = -1;
                 queenPositions[q_placed].y = -1;
                 removeThreats();
             } 
         }
-
-
+        return false;
     }
 };
 
 int main() {
     int n;  
-    cout << "Enter the number of queens\n";
+    cout << "Enter the number of queens: \n";
     cin >> n;
 
     if (n <= 0) {
-        cout << "The number must be greater than zero\n";
+        cout << "The number must be greater than zero.\n";
         return -1;
     }
 

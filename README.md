@@ -8,7 +8,10 @@ This repository is a continuous collection of academic exercises and various alg
 * **Object-Oriented Programming (OOP):** Classes, inheritance, polymorphism, and encapsulation in C++.
 * **Data Structures:** Implementation of lists, stacks, queues, and their logical behavior.
 * **Trees and Graphs:** Exploration, traversals, and algorithms applied to non-linear structures.
-* **Backtracking:**
+* **Backtracking:** Implementation of systematic search algorithms for solving combinatorial problems. This section explores:
+    * **State-Space Tree Exploration:** Understanding how recursive calls build a tree of potential solutions.
+    * **Pruning Techniques:** Enhancing efficiency by discarding non-promising paths early in the search.
+    * **Resource Management:** Restoring the system state (backtrack) after exploring recursive branches to maintain data integrity.
 
 ## Development and Compilation Environment
 
