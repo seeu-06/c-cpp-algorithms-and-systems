@@ -2,13 +2,15 @@
 using namespace std;
 
 /*
-    N-QUEENS PROBLEM (PROBLEMA DE LAS N-REINAS)
+    N-QUEENS: FULL STATE-SPACE EXPLORATION
     
-    Colocar N reinas en un tablero de ajedrez de NxN, de forma que ninguna amenace a otra 
-    en la misma fila, columna o diagonal. Se imprime la primera configuración valida.
+    Esta implementación es una variante de 'n-queens-naive.cpp' diseñada para 
+    realizar una búsqueda exhaustiva en el árbol de espacio de estados.
     
-    ** Esta implementación prioriza la claridad lógica y el aprendizaje del algoritmo de 
-       backtrackingsobre la optimización en términos de tiempo o memoria.
+    Diferencia clave: Se ha eliminado la propagación del control booleano, 
+    obligando al algoritmo a ejecutar el proceso de 'backtrack' (retroceso) 
+    incluso tras encontrar una solución. Esto permite agotar todas las ramas 
+    de ejecución y contabilizar el total de configuraciones válidas posibles.
 */
 
 struct Coordinate {
@@ -89,17 +91,19 @@ class Chessboard {
 
     void printBoard() {
         for (int i = 0; i < N; i++) {
+            cout << "| ";
             for (int j = 0; j < N; j++) {
                 cout << board[i][j] << " ";
             }
-            cout << endl;
+            cout <<"|\n";
         }
+        cout << "\n";
     }
 
-    bool n_queens_algorithm(int X = 0, int q_placed = 0) {
+    void n_queens_algorithm(int X = 0, int q_placed = 0) {
         if (q_placed == N) {
             printBoard();
-            return true;
+            return;
         } 
         
         for (int currentY = 0; currentY < N; currentY++) {
@@ -110,7 +114,7 @@ class Chessboard {
                 queenPositions[q_placed].y = currentY;
 
                 markThreats(X, currentY);
-                if (n_queens_algorithm(X + 1, q_placed + 1)) return true;
+                n_queens_algorithm(X + 1, q_placed + 1);
 
                 // backtrack --------------------------------------------
                 board[X][currentY] = '_';
@@ -119,7 +123,6 @@ class Chessboard {
                 removeThreats();
             } 
         }
-        return false;
     }
 };
 

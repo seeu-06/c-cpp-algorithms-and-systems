@@ -7,8 +7,11 @@
 using namespace std;
 
 /*
-    EJEMPLO DE ENTRADA Y SALIDA: --------------
+    ALGORITMO DE DIJKSTRA MODIFICADO.
+    
+    EJEMPLO.
 
+    ENTRADA:
     1 2 
     4 4 
     2 10 
@@ -21,6 +24,7 @@ using namespace std;
     3 4 2 18 
     1
 
+    SALIDA:
     1 2 4 2 3 
     16
 */

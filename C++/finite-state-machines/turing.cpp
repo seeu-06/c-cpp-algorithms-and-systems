@@ -7,8 +7,11 @@
 using namespace std;
 
 /*
-    EJEMPLO DE ENTRADA Y SALIDA: --------------
+    MÁQUINA DE TURING RECONOCEDORA.
 
+    EJEMPLO.
+
+    ENTRADA:
     3 4 
     a b A B 
     0 0 a A D 
@@ -17,6 +20,7 @@ using namespace std;
     1 2 B B S 
     abbaa
 
+    SALIDA:
     ABBAA 
     Rechazada
 */
