@@ -2,6 +2,9 @@
 
 This repository is a continuous collection of academic exercises and various algorithms for my personal learning. Its purpose is to document my progress and depth exploration of Computer Science fundamentals using C and C++.
 
+> [!NOTE]
+> **Language Policy:** The "frontend" of this repository (READMEs, directory structure, and file names) is maintained in english to align with international development standards. However, the internal comments and documentation within the source code files are written in spanish (my native language) to ensure the highest level of technical precision and depth for my personal study notes.
+
 ## Repository Focus
 
 * **Language Fundamentals:** Memory management, pointers, and core syntax of C/C++.
