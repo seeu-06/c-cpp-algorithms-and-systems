@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono> // integración para medir el tiempo de ejecución.
 using namespace std;
 
 /*
@@ -95,16 +96,49 @@ using namespace std;
 
         Al finalizar el procesamiento de un estado, se "gasta" el bit de la casilla segura mediante la 
         sustracción 'safe -= q_position', forzando al ciclo a calcular la siguiente configuración válida.
+
+        LIMITACIONES Y MODO DE USO ----------------------------------------------------------------------
+
+        * Límite de Arquitectura (N = 31): Debido al uso nativo de 'unsigned int' para las máscaras, el 
+        algoritmo es funcional hasta N = 31. Ingresar N = 32 genera un desbordamiento de bits (overflow) 
+        al calcular la constante DONE_MASK. 
+        
+        Para evaluar tableros mayores, es estrictamente necesario migrar las variables a tipos de datos 
+        más extensos (como 'uint64_t' o '__int128_t') y emplear librerías de aritmética de precisión 
+        múltiple (ej. GMP) para el contador de soluciones.
+
+        * Modo de Visualización (-v): Por defecto, el algoritmo omite las operaciones de salida durante 
+        la recursión para maximizar la velocidad de cálculo. Para imprimir gráficamente cada solución 
+        válida descubierta, el binario debe ejecutarse desde la terminal con la bandera de verbosidad '-v'. 
+        Ejemplo: ./n-queens-optimized -v
 */
 
 unsigned int DONE_MASK = 0; // máscara límite.
+unsigned int history_board[32]; // almacena la posición de la reina en cada fila.
+unsigned long long solutions = 0;
+int N = 0;
+bool verbose = false; // control de impresión.
+
+void printBoard() {
+    cout << "SOLUTION " << solutions + 1 << ":\n";
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            // evaluamos si en la fila 'i', el bit 'j' está encendido
+            if (history_board[i] & (1 << j)) cout << "Q ";
+            else cout << "_ ";
+        }
+        cout << "\n";
+    }
+    cout << "--------------------------------\n";
+}
 
 void n_queens_optimized(unsigned int C, unsigned int L, 
     unsigned int R, unsigned int q_placed) {
 
     // caso base: Si C alcanza el límite -> se han colocado las N reinas.
     if (C == DONE_MASK) {
-        //printBoard();
+        if (verbose) printBoard();
+        solutions++;
         return;
     }
 
@@ -116,6 +150,9 @@ void n_queens_optimized(unsigned int C, unsigned int L,
     while (safe > 0) {
         // se aisla el bit más a la derecha que está libre.
         unsigned int q_position = safe & -safe;
+
+        // se guarda la posición en el arreglo para imprimir el estado del tablero.
+        history_board[q_placed] = q_position;
 
         n_queens_optimized(
             C | q_position, 
@@ -129,18 +166,32 @@ void n_queens_optimized(unsigned int C, unsigned int L,
     }
 }
 
-int main() {
-    int N = 0;
+int main(int argc, char* argv[]) {
+    // verificación para argumentos de entrada.
+    for (int i = 1; i < argc; i++)
+        if (string(argv[i]) == "-v") verbose = true;
+
     cout << "Enter the number of queens:\n";
     cin >> N;
 
-    if (N <= 0) {
-        cout << "The number must be greater than zero.\n";
+    if (N <= 0 || N > 31) {
+        cout << "The number must be greater than zero and max 31\n";
         return -1;
     }
 
     DONE_MASK = (1 << N) - 1;
+
+    // inicio de medición de tiempo.
+    auto start = chrono::high_resolution_clock::now();
+
     n_queens_optimized(0, 0, 0, 0);
+
+    // finalizar contador -> tiempo de ejecución.
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duration = end - start;
+
+    cout << "Total solutions found: " << solutions << "\n";
+    cout << "Execution time: " << duration.count() << " ms\n";
 
     return 0;
 }
