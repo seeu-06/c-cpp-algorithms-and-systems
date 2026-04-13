@@ -8,7 +8,6 @@ private:
     struct Node {
         T data;
         Node* next;
-
         Node(T val) : data(val), next(nullptr) {}
     };
 
@@ -19,14 +18,14 @@ public:
     Stack() : top(nullptr), count(0) {}
     ~Stack() { clear(); }
 
+    bool empty() const { return top == nullptr; }
+
     void push(T value) {
         Node* newNode = new Node(value);
         newNode->next = top;
         top = newNode;
         count++;
     }
-
-    bool empty() const { return top == nullptr; }
 
     void pop() { // elimina el nodo que se encuentre en el tope sin retornar sus datos.
         if (empty()) return;
